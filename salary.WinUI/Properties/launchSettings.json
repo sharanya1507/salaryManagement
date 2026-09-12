@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "salary.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "salary.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
