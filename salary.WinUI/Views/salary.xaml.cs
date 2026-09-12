@@ -2,9 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using salary.DataLayer.Models;
 using salary.DataLayer.Repo;
 using salary.SharedLayer;
+using System.Text.RegularExpressions;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -46,6 +48,11 @@ namespace salary_WinUI.Views
             object sender,
             RoutedEventArgs e)
         {
+            if (!await ValidateInputsAsync())
+            {
+                return;
+            }
+
             string name = NameTextBox.Text;
 
             if (!decimal.TryParse(
@@ -76,6 +83,11 @@ namespace salary_WinUI.Views
             object sender,
             RoutedEventArgs e)
         {
+            if (!await ValidateInputsAsync())
+            {
+                return;
+            }
+
             if (_lastCalculatedResult == null)
             {
                 await ShowMessageAsync(
@@ -100,6 +112,75 @@ namespace salary_WinUI.Views
             };
 
             await dialog.ShowAsync();
+        }
+
+        private async Task<bool> ValidateInputsAsync()
+        {
+            var errors = new List<string>();
+
+            string name = NameTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                SetErrorBorder(NameTextBox);
+                errors.Add("Name is required.");
+            }
+            else if (name.Length > 50)
+            {
+                SetErrorBorder(NameTextBox);
+                errors.Add("Name cannot be more than 50 characters.");
+            }
+            else if (!Regex.IsMatch(name, "^[a-zA-Z ]+$"))
+            {
+                SetErrorBorder(NameTextBox);
+                errors.Add("Name can only contain alphabets and spaces.");
+            }
+            else
+            {
+                ClearErrorBorder(NameTextBox);
+            }
+
+            string grossText = GrossSalaryTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(grossText))
+            {
+                SetErrorBorder(GrossSalaryTextBox);
+                errors.Add("Gross Salary is required.");
+            }
+            else if (!decimal.TryParse(grossText, out decimal gross))
+            {
+                SetErrorBorder(GrossSalaryTextBox);
+                errors.Add("Gross Salary must be a valid number.");
+            }
+            else if (gross <= 0)
+            {
+                SetErrorBorder(GrossSalaryTextBox);
+                errors.Add("Gross Salary must be greater than 0.");
+            }
+            else
+            {
+                ClearErrorBorder(GrossSalaryTextBox);
+            }
+
+            if (errors.Count > 0)
+            {
+                await ShowMessageAsync(string.Join("\n", errors));
+                return false;
+            }
+
+            return true;
+        }
+
+        private void SetErrorBorder(TextBox textBox)
+        {
+            textBox.BorderBrush = new SolidColorBrush(Microsoft.UI.Colors.Red);
+            textBox.BorderThickness = new Thickness(2);
+        }
+
+        private void ClearErrorBorder(TextBox textBox)
+        {
+            textBox.ClearValue(Control.BorderBrushProperty);
+            textBox.ClearValue(Control.BorderThicknessProperty);
         }
     }
 }

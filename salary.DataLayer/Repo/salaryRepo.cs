@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using salary.DataLayer.Models;
 using salary.DataLayer.Interface;
+using salary.DataLayer.Models;
 using salary.SharedLayer;
 
 namespace salary.DataLayer.Repo
@@ -9,22 +9,28 @@ namespace salary.DataLayer.Repo
     {
         private readonly salaryDbContext _context;
 
+        private readonly List<Pension> _pensions;
+        private readonly List<Tax> _taxes;
+
         public salaryRepo(salaryDbContext context)
         {
             _context = context;
+
+            _pensions = _context.Pensions.ToList();
+            _taxes = _context.Taxes.ToList();
         }
 
         public async Task<SalaryDto> CalculateSalaryAsync(
             string name,
             decimal gross)
         {
-            var pension = await _context.Pensions
-                .FirstOrDefaultAsync(x =>
+            var pension = _pensions
+                .FirstOrDefault(x =>
                     gross >= x.FromSalary &&
                     gross <= x.ToSalary);
 
-            var tax = await _context.Taxes
-                .FirstOrDefaultAsync(x =>
+            var tax = _taxes
+                .FirstOrDefault(x =>
                     gross >= x.FromSalary &&
                     gross <= x.ToSalary);
 
