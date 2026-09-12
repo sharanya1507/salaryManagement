@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="salary.DataLayer/salary.DataLayer.csproj" />
+  <Project Path="salary.SharedLayer/salary.SharedLayer.csproj" Id="6fa8d42e-6cf4-4362-9e4c-de7979414b0c" />
   <Project Path="salary.WinUI/salary.WinUI.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />

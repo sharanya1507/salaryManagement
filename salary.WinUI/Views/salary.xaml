@@ -8,7 +8,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,8" />
+        <TextBox x:Name="NameTextBox" Grid.Row="0" Grid.Column="1" Width="300" Margin="0,0,0,8" />
+
+        <TextBlock Text="Gross Salary:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,8" />
+        <TextBox x:Name="GrossSalaryTextBox" Grid.Row="1" Grid.Column="1" Width="200" Margin="0,0,0,8" />
+
+        <TextBlock Text="Tax:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,8" />
+        <TextBox x:Name="TaxTextBox" Grid.Row="2" Grid.Column="1" IsReadOnly="True" Width="200" Margin="0,0,0,8" />
+
+        <TextBlock Text="Pension:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,8" />
+        <TextBox x:Name="PensionTextBox" Grid.Row="3" Grid.Column="1" IsReadOnly="True" Width="200" Margin="0,0,0,8" />
+
+        <TextBlock Text="Net Salary:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,8" />
+        <TextBox x:Name="NetSalaryTextBox" Grid.Row="4" Grid.Column="1" IsReadOnly="True" Width="200" Margin="0,0,0,8" />
+
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,12,0,0" Spacing="8">
+            <Button x:Name="CalculateButton"
+        Content="Calculate"
+        Width="100"
+        Click="CalculateButton_Click" />
+            <Button x:Name="SaveButton" Content="Save" Width="100" Click="SaveButton_Click" />
+        </StackPanel>
     </Grid>
 </Page>

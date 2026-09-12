@@ -34,6 +34,12 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <!--
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
@@ -52,9 +58,15 @@
     <PropertyGroup> above to opt out.
   -->
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinApp" Version="0.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\salary.DataLayer\salary.DataLayer.csproj" />
+    <ProjectReference Include="..\salary.SharedLayer\salary.SharedLayer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\salary.xaml">

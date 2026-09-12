@@ -22,7 +22,7 @@ namespace salary_WinUI
             AppWindow.SetIcon("Assets/AppIcon.ico");
 
             // Navigate the root frame to the main page on startup.
-            RootFrame.Navigate(typeof(MainPage));
+            RootFrame.Navigate(typeof(Views.salary));
         }
     }
 }
