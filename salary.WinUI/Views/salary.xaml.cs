@@ -42,6 +42,22 @@ namespace salary_WinUI.Views
             var context = new salaryDbContext(options);
 
             _salaryRepo = new salaryRepo(context);
+
+            Loaded += Salary_Loaded;
+        }
+
+
+        private async void Salary_Loaded(object sender,RoutedEventArgs e)
+        {
+            await LoadEmployeesAsync();
+        }
+
+
+        private async Task LoadEmployeesAsync()
+        {
+            var employees = await _salaryRepo.GetAllEmployeesAsync();
+
+            EmployeeListView.ItemsSource = employees;
         }
 
         private async void CalculateButton_Click(
@@ -96,6 +112,8 @@ namespace salary_WinUI.Views
             }
 
             await _salaryRepo.SaveEmployeeAsync(_lastCalculatedResult);
+
+            await LoadEmployeesAsync();
 
             await ShowMessageAsync(
                 "Salary saved successfully.");

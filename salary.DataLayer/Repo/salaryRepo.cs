@@ -74,5 +74,10 @@ namespace salary.DataLayer.Repo
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Employee>> GetAllEmployeesAsync()
+        {
+            return await _context.Employees.OrderByDescending(e => e.Salary).ToListAsync();
+        }
     }
 }
